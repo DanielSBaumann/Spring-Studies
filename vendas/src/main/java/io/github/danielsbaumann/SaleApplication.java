@@ -26,7 +26,7 @@ public class SaleApplication {
     //injetando animal aqui
     //@Autowired
     /*@Qualifier("gato") dessa forma caso não exista anotation costumizada*/
-    @Cachorro
+    @Gato
     private Animal animal;
 
     @Bean(name = "executeAnimal")
