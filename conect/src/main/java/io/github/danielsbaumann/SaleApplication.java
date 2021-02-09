@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @SpringBootApplication
@@ -28,13 +29,42 @@ public class SaleApplication {
             clientes.salvar(cliente2);
             */
 
+            System.out.println("Salvando clientes");
+
             clientes.salvar(new Cliente("Daniel Baumann"));
             clientes.salvar(new Cliente("Thomas Baumann"));
             clientes.salvar(new Cliente("Paula Bastos"));
 
             List<Cliente> list = clientes.obterTodos();
 
+            System.out.println("Print todos clientes");
+
             list.forEach(System.out::println);
+
+            System.out.println("Atualizando clientes");
+
+            list.forEach(c -> {
+                c.setNome(c.getNome() + " atualizado");
+                clientes.atualizar(c);
+            });
+
+            list.forEach(System.out::println);
+
+            System.out.println("Buscando por nome");
+            clientes.buscarPorNome("Thomas").forEach(System.out::println);
+
+            //System.out.println("Deletando clientes");
+
+//            clientes.obterTodos().forEach(c -> {
+//                clientes.deletar(c.getId());
+//            });
+
+            list = clientes.obterTodos();
+            if (list.isEmpty()) {
+                System.out.println("Nenhum cliente encontrado");
+            } else {
+                list.forEach(System.out::println);
+            }
         };
     }
 

@@ -1,5 +1,10 @@
 package io.github.danielsbaumann.domain.entity;
 
+import javax.persistence.*;
+
+@Entity
+//@Table(name = "nome_tabela", schema = "vendas") exemplo
+@Table(name = "cliente")
 public class Cliente {
 
     public Cliente() {
@@ -14,7 +19,11 @@ public class Cliente {
         this.nome = nome;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
+    @Column(name = "nome", length = 100,unique = true)
     private String nome;
 
     public Integer getId() {
