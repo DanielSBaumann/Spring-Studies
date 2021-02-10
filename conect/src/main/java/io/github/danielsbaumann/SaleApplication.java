@@ -2,6 +2,7 @@ package io.github.danielsbaumann;
 
 import io.github.danielsbaumann.domain.entity.Cliente;
 import io.github.danielsbaumann.domain.repository.Clientes;
+import io.github.danielsbaumann.domain.repository.ClientesTry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +17,7 @@ import java.util.List;
 public class SaleApplication {
 
     @Bean
-    public CommandLineRunner init(@Autowired Clientes clientes) {
+    public CommandLineRunner init(@Autowired ClientesTry clientes) {
         return args -> {
 
             /*
@@ -31,11 +32,11 @@ public class SaleApplication {
 
             System.out.println("Salvando clientes");
 
-            clientes.salvar(new Cliente("Daniel Baumann"));
-            clientes.salvar(new Cliente("Thomas Baumann"));
-            clientes.salvar(new Cliente("Paula Bastos"));
+            clientes.save(new Cliente("Daniel Baumann"));
+            clientes.save(new Cliente("Thomas Baumann"));
+            clientes.save(new Cliente("Paula Bastos"));
 
-            List<Cliente> list = clientes.obterTodos();
+            List<Cliente> list = clientes.findAll();
 
             System.out.println("Print todos clientes");
 
@@ -45,26 +46,28 @@ public class SaleApplication {
 
             list.forEach(c -> {
                 c.setNome(c.getNome() + " atualizado");
-                clientes.atualizar(c);
+                clientes.save(c);
             });
 
             list.forEach(System.out::println);
 
             System.out.println("Buscando por nome");
-            clientes.buscarPorNome("Thomas").forEach(System.out::println);
+            clientes.findByNome("Thomas").forEach(System.out::println);
+            System.out.println("Apos pesquisa");
+            //clientes.buscarPorNome("Thomas").forEach(System.out::println);
 
-            //System.out.println("Deletando clientes");
-
-//            clientes.obterTodos().forEach(c -> {
-//                clientes.deletar(c.getId());
+//            System.out.println("Deletando clientes");
+//
+//            clientes.findAll().forEach(c -> {
+//                clientes.delete(c);
 //            });
-
-            list = clientes.obterTodos();
-            if (list.isEmpty()) {
-                System.out.println("Nenhum cliente encontrado");
-            } else {
-                list.forEach(System.out::println);
-            }
+//
+//            list = clientes.findAll();
+//            if (list.isEmpty()) {
+//                System.out.println("Nenhum cliente encontrado");
+//            } else {
+//                list.forEach(System.out::println);
+//            }
         };
     }
 
