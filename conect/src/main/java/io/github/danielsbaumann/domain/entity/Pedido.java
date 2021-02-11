@@ -1,6 +1,7 @@
 package io.github.danielsbaumann.domain.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -21,7 +22,8 @@ public class Pedido {
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
 
-    @Column(name = "total", length = 20, precision = 2)
+    @Digits(integer = 7, fraction = 2)
+    @Column(name = "total")
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido")
@@ -65,6 +67,15 @@ public class Pedido {
 
     public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", dataPedido=" + dataPedido +
+                ", total=" + total +
+                "}";
     }
 
 }

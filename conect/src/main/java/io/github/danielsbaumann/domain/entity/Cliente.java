@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-//@Table(name = "nome_tabela", schema = "vendas") exemplo
 @Table(name = "cliente")
 public class Cliente {
 
@@ -24,9 +23,11 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
+
     @Column(name = "nome", length = 100, unique = true)
     private String nome;
-    @OneToMany(mappedBy = "cliente")
+
+    @OneToMany(mappedBy = "cliente",fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
 
     public Integer getId() {
