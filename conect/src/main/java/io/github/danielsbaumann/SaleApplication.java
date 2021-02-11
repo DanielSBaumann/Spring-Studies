@@ -51,23 +51,14 @@ public class SaleApplication {
 
             list.forEach(System.out::println);
 
-            System.out.println("Buscando por nome");
-            clientes.findByNome("Thomas").forEach(System.out::println);
-            System.out.println("Apos pesquisa");
-            //clientes.buscarPorNome("Thomas").forEach(System.out::println);
+            List<Cliente> porNome = clientes.encontrarPorNome("Thomas Baumann atualizado");
+            System.out.println("Procurando nome");
+            porNome.forEach(System.out::println);
 
-//            System.out.println("Deletando clientes");
-//
-//            clientes.findAll().forEach(c -> {
-//                clientes.delete(c);
-//            });
-//
-//            list = clientes.findAll();
-//            if (list.isEmpty()) {
-//                System.out.println("Nenhum cliente encontrado");
-//            } else {
-//                list.forEach(System.out::println);
-//            }
+            System.out.println("Deletando pelo id 3");
+            clientes.deleteById(3);
+            list = clientes.findAll();
+            list.forEach(System.out::println);
         };
     }
 

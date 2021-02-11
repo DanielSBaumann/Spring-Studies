@@ -1,6 +1,7 @@
 package io.github.danielsbaumann.domain.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 //@Table(name = "nome_tabela", schema = "vendas") exemplo
@@ -25,6 +26,8 @@ public class Cliente {
     private Integer id;
     @Column(name = "nome", length = 100, unique = true)
     private String nome;
+    @OneToMany(mappedBy = "cliente")
+    private Set<Pedido> pedidos;
 
     public Integer getId() {
         return id;
@@ -40,6 +43,14 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     @Override
