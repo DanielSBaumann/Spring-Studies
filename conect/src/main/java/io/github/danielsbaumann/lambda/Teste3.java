@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static java.util.Comparator.comparing;
-import static java.util.Comparator.comparingInt;
+import static java.util.Comparator.*;
 
 public class Teste3 {
     public static void main(String[] args) {
@@ -33,8 +32,19 @@ public class Teste3 {
 
         System.out.println("\nRe-imprimindo por ordem de pontos");
 
-        users.sort(comparingInt(Usuario::getPontos).reversed());
+        users.sort(comparingInt(Usuario::getPontos).reversed().thenComparing(Usuario::getNome));
         users.forEach(System.out::println);
         //parei pagina 31 ou (51 de 140)
+
+        System.out.println("\nTornando todos moderadores ->");
+        users.forEach(Usuario::tornarModerador);
+        users.forEach(System.out::println);
+
+        users.add(new Usuario("", 0));
+        users.sort(nullsFirst(comparingInt(Usuario::getPontos)));
+        users.forEach(System.out::println);
+
+        users.removeIf(u -> u.getPontos() > 200);
+        users.forEach(System.out::println);
     }
 }
