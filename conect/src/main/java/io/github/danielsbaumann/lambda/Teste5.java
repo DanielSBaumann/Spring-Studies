@@ -6,7 +6,6 @@ import java.util.Optional;
 
 public class Teste5 {
     public static void main(String[] args) {
-        //Lazy
         Usuario user1 = new Usuario("Daniel Baumann", 150);
         Usuario user2 = new Usuario("Thomas Baumann", 120);
         Usuario user3 = new Usuario("Paula Bastos", 190);
@@ -25,6 +24,7 @@ public class Teste5 {
                 .filter(user -> user.getPontos() == 220)
                 .peek(System.out::println)
                 .findAny();
-        System.out.println(optional.get().getNome());
+        //System.out.println(optional.get().getNome());
+        System.out.println(optional.isPresent() ? optional.get().getNome() : "Sem resultados");
     }
 }
