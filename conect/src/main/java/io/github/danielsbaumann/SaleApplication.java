@@ -38,37 +38,37 @@ public class SaleApplication {
 //            System.out.println("Print todos clientes");
 //
 //            list.forEach(System.out::println);
-////
-////            Pedido p = new Pedido();
-////            p.setCliente(list.get(0));
-////            p.setDataPedido(LocalDate.now());
-////            p.setTotal(BigDecimal.valueOf(1000));
-////
-////            pedidos.save(p);
 //
-////            Cliente aux = clientes.findClienteFetchPedidos(list.get(0).getId());
-////            System.out.println(aux);
-////            System.out.println(aux.getPedidos());
+//            Pedido p = new Pedido();
+//            p.setCliente(list.get(0));
+//            p.setDataPedido(LocalDate.now());
+//            p.setTotal(BigDecimal.valueOf(1000));
 //
-////            pedidos.findByCliente((list.get(0))).forEach(System.out::println);
+//            pedidos.save(p);
+
+//            Cliente aux = clientes.findClienteFetchPedidos(list.get(0).getId());
+//            System.out.println(aux);
+//            System.out.println(aux.getPedidos());
+
+//            pedidos.findByCliente((list.get(0))).forEach(System.out::println);
+
+//            System.out.println("Atualizando clientes");
 //
-////            System.out.println("Atualizando clientes");
-////
-////            list.forEach(c -> {
-////                c.setNome(c.getNome() + " atualizado");
-////                clientes.save(c);
-////            });
-////
-////            list.forEach(System.out::println);
-////
-////            List<Cliente> porNome = clientes.encontrarPorNome("Thomas Baumann atualizado");
-////            System.out.println("Procurando nome");
-////            porNome.forEach(System.out::println);
-////
-////            System.out.println("Deletando pelo id 3");
-////            clientes.deleteById(3);
-////            list = clientes.findAll();
-////            list.forEach(System.out::println);
+//            list.forEach(c -> {
+//                c.setNome(c.getNome() + " atualizado");
+//                clientes.save(c);
+//            });
+//
+//            list.forEach(System.out::println);
+//
+//            List<Cliente> porNome = clientes.encontrarPorNome("Thomas Baumann atualizado");
+//            System.out.println("Procurando nome");
+//            porNome.forEach(System.out::println);
+//
+//            System.out.println("Deletando pelo id 3");
+//            clientes.deleteById(3);
+//            list = clientes.findAll();
+//            list.forEach(System.out::println);
 //        };
 //    }
 

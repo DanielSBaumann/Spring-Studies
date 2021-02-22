@@ -4,14 +4,16 @@ import io.github.danielsbaumann.domain.entity.Cliente;
 import io.github.danielsbaumann.domain.entity.ItemPedido;
 import io.github.danielsbaumann.domain.entity.Pedido;
 import io.github.danielsbaumann.domain.entity.Produto;
+import io.github.danielsbaumann.domain.enums.StatusPedido;
 import io.github.danielsbaumann.domain.repository.ClientesTry;
 import io.github.danielsbaumann.domain.repository.ItemPedidos;
 import io.github.danielsbaumann.domain.repository.Pedidos;
 import io.github.danielsbaumann.domain.repository.Produtos;
-import io.github.danielsbaumann.excpetion.RegraNegocioException;
+import io.github.danielsbaumann.exception.RegraNegocioException;
 import io.github.danielsbaumann.rest.dto.ItemPedidoDTO;
 import io.github.danielsbaumann.rest.dto.PedidoDTO;
 import io.github.danielsbaumann.service.PedidoService;
+import io.github.danielsbaumann.exception.PedidoNaoEncontradoException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,12 +45,13 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
 
-        List<ItemPedido> itemsPedidos = converterItems(pedido, dto.getItems());
+        List<ItemPedido> itensPedidos = converterItems(pedido, dto.getItens());
 
         repository.save(pedido);
-        itemsPedidoRepository.saveAll(itemsPedidos);
-        pedido.setItens(itemsPedidos);
+        itemsPedidoRepository.saveAll(itensPedidos);
+        pedido.setItens(itensPedidos);
         return pedido;
     }
 
@@ -57,11 +60,23 @@ public class PedidoServiceImpl implements PedidoService {
         return repository.findByIdFetchItens(id);
     }
 
-    private List<ItemPedido> converterItems(Pedido pedido, List<ItemPedidoDTO> items) {
-        if (items.isEmpty()) {
+    @Override
+    @Transactional
+    public void atualizarStatus(Integer id, StatusPedido statusPedido) {
+        repository
+                .findById(id)
+                .map(pedido -> {
+                    pedido.setStatus(statusPedido);
+                    return repository.save(pedido);
+                })
+                .orElseThrow(() -> new PedidoNaoEncontradoException());
+    }
+
+    private List<ItemPedido> converterItems(Pedido pedido, List<ItemPedidoDTO> itens) {
+        if (itens.isEmpty()) {
             throw new RegraNegocioException("Não é possível realizar um pedido sem itens");
         }
-        return items
+        return itens
                 .stream()
                 .map(dto -> {
                     Integer idProduto = dto.getProduto();

@@ -1,4 +1,4 @@
-package io.github.danielsbaumann.excpetion;
+package io.github.danielsbaumann.exception;
 
 public class RegraNegocioException extends RuntimeException{
 

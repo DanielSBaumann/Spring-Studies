@@ -2,6 +2,8 @@ package io.github.danielsbaumann.rest.controller;
 
 import io.github.danielsbaumann.domain.entity.ItemPedido;
 import io.github.danielsbaumann.domain.entity.Pedido;
+import io.github.danielsbaumann.domain.enums.StatusPedido;
+import io.github.danielsbaumann.rest.dto.AtualizacaoStatusPedidoDTO;
 import io.github.danielsbaumann.rest.dto.InformacaoItemPedidoDTO;
 import io.github.danielsbaumann.rest.dto.InformacoesPedidoDTO;
 import io.github.danielsbaumann.rest.dto.PedidoDTO;
@@ -53,15 +55,24 @@ public class PedidoController {
                 .cpf(pedido.getCliente().getCpf())
                 .nomeCliente(pedido.getCliente().getNome())
                 .total(pedido.getTotal())
-                .items(converter(pedido.getItens()))
+                .status(pedido.getStatus().name())
+                .itens(converter(pedido.getItens()))
                 .build();
+    }
+
+    @PatchMapping("update/{id}")
+    @ResponseStatus(NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id,
+                             @RequestBody AtualizacaoStatusPedidoDTO dto) {
+        String novoStatus = dto.getNovoStatus();
+        service.atualizarStatus(id, StatusPedido.valueOf(novoStatus));
     }
 
     private List<InformacaoItemPedidoDTO> converter(List<ItemPedido> items) {
         if (CollectionUtils.isEmpty(items)) {
             return Collections.emptyList();
         }
-        items
+        return items
                 .stream()
                 .map(item -> InformacaoItemPedidoDTO
                         .builder()
@@ -70,7 +81,6 @@ public class PedidoController {
                         .quantidade(item.getQuantidade())
                         .build()
                 ).collect(Collectors.toList());
-        return null;
     }
 
 }

@@ -1,5 +1,6 @@
 package io.github.danielsbaumann.domain.entity;
 
+import io.github.danielsbaumann.domain.enums.StatusPedido;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,6 +35,10 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusPedido status;
 
     @Override
     public String toString() {
